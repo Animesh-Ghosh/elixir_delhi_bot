@@ -9,7 +9,8 @@ defmodule ElixirDelhiBot.Application do
   def start(_type, _args) do
     children = [
       # Starts a worker by calling: ElixirDelhiBot.Worker.start_link(arg)
-      {Finch, name: Telegramex.HTTPClient}
+      {Finch, name: Telegramex.HTTPClient},
+      {ElixirDelhiBot.Worker, nil}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
