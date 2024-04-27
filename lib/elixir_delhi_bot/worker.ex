@@ -15,13 +15,9 @@ defmodule ElixirDelhiBot.Worker do
   @impl true
   def handle_info(:work, state) do
     {:ok, new_update_id} = ElixirDelhiBot.greet_new_members(state)
-    reschedule_worker()
+    schedule_worker()
 
     {:noreply, new_update_id}
-  end
-
-  defp reschedule_worker do
-    schedule_worker()
   end
 
   defp schedule_worker do
