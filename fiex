@@ -1,0 +1,5 @@
+#!/bin/bash
+
+set -e
+
+fly ssh console --pty --select -C "_build/prod/rel/elixir_delhi_bot/bin/elixir_delhi_bot remote"
