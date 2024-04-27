@@ -8,8 +8,6 @@ defmodule ElixirDelhiBot do
       {:ok, update_id}
     else
       {:error, :no_matching_update, non_matching_update} ->
-        IO.puts("Error: No Matching Update")
-        IO.inspect(non_matching_update)
         {:ok, last_update_id}
     end
   end
