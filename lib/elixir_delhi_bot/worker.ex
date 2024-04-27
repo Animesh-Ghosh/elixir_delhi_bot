@@ -6,7 +6,8 @@ defmodule ElixirDelhiBot.Worker do
   end
 
   @impl true
-  def init(state) do
+  def init(_state) do
+    state = CubDB.get(:my_cubdb, :last_update_id)
     schedule_worker()
 
     {:ok, state}
@@ -16,6 +17,7 @@ defmodule ElixirDelhiBot.Worker do
   def handle_info(:work, state) do
     {:ok, new_update_id} = ElixirDelhiBot.greet_new_members(state)
     schedule_worker()
+    CubDB.put(:my_cubdb, :last_update_id, new_update_id)
 
     {:noreply, new_update_id}
   end

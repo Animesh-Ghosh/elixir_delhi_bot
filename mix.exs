@@ -23,7 +23,8 @@ defmodule ElixirDelhiBot.MixProject do
   defp deps do
     [
       {:finch, "~> 0.5"},
-      {:telegramex, "~> 0.1.1"}
+      {:telegramex, "~> 0.1.1"},
+      {:cubdb, "~> 2.0.2"}
     ]
   end
 end

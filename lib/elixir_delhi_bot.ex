@@ -6,6 +6,11 @@ defmodule ElixirDelhiBot do
            new_chat_members_from(updates, last_update_id) do
       greet_new_members(chat_id, new_chat_members)
       {:ok, update_id}
+    else
+      {:error, :no_matching_update, non_matching_update} ->
+        IO.puts("Error: No Matching Update")
+        IO.inspect(non_matching_update)
+        {:ok, last_update_id}
     end
   end
 
@@ -15,30 +20,38 @@ defmodule ElixirDelhiBot do
   end
 
   defp new_chat_members_from(updates, last_update_id) do
-    {:ok, chat_id, new_chat_members, update_id} = last_update_of(updates)
+    case last_update_of(updates) do
+      {:ok, chat_id, new_chat_members, update_id} ->
+        new_chat_members =
+          if new_update?(last_update_id, update_id) do
+            new_chat_members
+          else
+            []
+          end
 
-    new_chat_members =
-      if new_update?(last_update_id, update_id) do
-        new_chat_members
-      else
-        []
-      end
+        {:ok, chat_id, new_chat_members, update_id}
 
-    {:ok, chat_id, new_chat_members, update_id}
+      error ->
+        error
+    end
   end
 
   defp last_update_of(updates) do
-    %{
-      "message" => %{
-        "chat" => %{
-          "id" => chat_id
+    case List.last(updates) do
+      %{
+        "message" => %{
+          "chat" => %{
+            "id" => chat_id
+          },
+          "new_chat_members" => new_chat_members
         },
-        "new_chat_members" => new_chat_members
-      },
-      "update_id" => update_id
-    } = List.last(updates)
+        "update_id" => update_id
+      } ->
+        {:ok, chat_id, new_chat_members, update_id}
 
-    {:ok, chat_id, new_chat_members, update_id}
+      non_matching_update ->
+        {:error, :no_matching_update, non_matching_update}
+    end
   end
 
   defp new_update?(last_update_id, current_update_id) do

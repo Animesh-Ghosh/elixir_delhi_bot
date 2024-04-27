@@ -3,7 +3,7 @@ FROM elixir:latest
 
 # Set environment variables for running in production
 ENV MIX_ENV=prod \
-    PORT=4000 \
+    PORT=4369 \
     REPLACE_OS_VARS=true \
     SHELL=/bin/bash
 
