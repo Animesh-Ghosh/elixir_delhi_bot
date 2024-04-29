@@ -1,5 +1,5 @@
 # Use an official Elixir runtime as the base image
-FROM elixir:latest
+FROM elixir:latest AS base
 
 # Set environment variables for running in production
 ENV MIX_ENV=prod \
@@ -27,6 +27,8 @@ RUN mix compile
 
 # Build the release
 RUN mix release
+
+COPY --from=_build/prod .
 
 # Expose the application port
 EXPOSE $PORT
