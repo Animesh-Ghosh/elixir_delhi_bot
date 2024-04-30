@@ -28,7 +28,7 @@ RUN mix compile
 # Build the release
 RUN mix release
 
-FROM alpine:latest AS final
+FROM elixir:slim AS final
 
 WORKDIR /app
 
