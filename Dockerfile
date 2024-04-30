@@ -1,5 +1,5 @@
 # Use an official Elixir runtime as the base image
-FROM elixir:latest AS base
+FROM elixir:latest AS builder
 
 # Set environment variables for running in production
 ENV MIX_ENV=prod \
@@ -28,10 +28,16 @@ RUN mix compile
 # Build the release
 RUN mix release
 
-COPY --from=_build/prod .
+FROM alpine:latest AS final
+
+WORKDIR /app
+
+# Copy the _build directory from the build stage
+COPY --from=builder /app/_build ./_build
 
 # Expose the application port
 EXPOSE $PORT
 
 # Set the entry point for the container
-ENTRYPOINT ["_build/prod/rel/elixir_delhi_bot/bin/elixir_delhi_bot", "start"]
+ENTRYPOINT ["_build/prod/rel/elixir_delhi_bot/bin/elixir_delhi_bot"]
+CMD ["start"]
