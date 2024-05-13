@@ -10,7 +10,7 @@ defmodule ElixirDelhiBot.Application do
     children = [
       # Starts a worker by calling: ElixirDelhiBot.Worker.start_link(arg)
       {Finch, name: Telegramex.HTTPClient},
-      {CubDB, data_dir: "tmp/cubdb_dir", name: :my_cubdb},
+      {CubDB, data_dir: Application.fetch_env!(:elixir_delhi_bot, :data_dir), name: :my_cubdb},
       {ElixirDelhiBot.Worker, nil}
     ]
 

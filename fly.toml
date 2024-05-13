@@ -20,3 +20,8 @@ primary_region = 'sin'
   memory = '512mb'
   cpu_kind = 'shared'
   cpus = 1
+
+[mounts]
+  source = 'elixir_delhi_bot_data'
+  destination = '/data'
+  initial_size = 1
