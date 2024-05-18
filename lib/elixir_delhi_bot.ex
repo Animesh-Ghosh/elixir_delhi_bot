@@ -12,7 +12,7 @@ defmodule ElixirDelhiBot do
     end
   end
 
-  defp first_unprocessed_update(updates, nil), do: List.last(updates)
+  defp first_unprocessed_update(updates, nil), do: {:ok, List.last(updates)}
 
   defp first_unprocessed_update(updates, last_update_id) do
     first_unprocessed_update =
@@ -36,67 +36,6 @@ defmodule ElixirDelhiBot do
 
       _ ->
         {:error, :unhandled_update}
-    end
-  end
-
-  def greet_new_members(last_update_id) do
-    # TODO: too many helper methods, move into a separate module
-    with {:ok, updates} <- get_updates(),
-         {:ok, chat_id, new_chat_members, update_id} <-
-           new_chat_members_from(updates, last_update_id) do
-      greet_new_members(chat_id, new_chat_members)
-      {:ok, update_id}
-    else
-      {:error, :no_matching_update, non_matching_update} ->
-        {:ok, last_update_id}
-    end
-  end
-
-  defp get_updates do
-    {:ok, %{"result" => result}} = ElixirDelhiBot.Telegramex.get_updates()
-    {:ok, result}
-  end
-
-  defp new_chat_members_from(updates, last_update_id) do
-    case last_update_of(updates) do
-      {:ok, chat_id, new_chat_members, update_id} ->
-        new_chat_members =
-          if new_update?(last_update_id, update_id) do
-            new_chat_members
-          else
-            []
-          end
-
-        {:ok, chat_id, new_chat_members, update_id}
-
-      error ->
-        error
-    end
-  end
-
-  defp last_update_of(updates) do
-    case List.last(updates) do
-      %{
-        "message" => %{
-          "chat" => %{
-            "id" => chat_id
-          },
-          "new_chat_members" => new_chat_members
-        },
-        "update_id" => update_id
-      } ->
-        {:ok, chat_id, new_chat_members, update_id}
-
-      non_matching_update ->
-        {:error, :no_matching_update, non_matching_update}
-    end
-  end
-
-  defp new_update?(last_update_id, current_update_id) do
-    if is_nil(last_update_id) do
-      true
-    else
-      current_update_id > last_update_id
     end
   end
 
