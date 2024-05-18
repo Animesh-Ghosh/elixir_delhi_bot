@@ -1,4 +1,6 @@
 defmodule ElixirDelhiBot do
+  alias ElixirDelhiBot.Greeter
+
   def process_updates([], last_update_id), do: {:ok, last_update_id}
 
   def process_updates(updates, last_update_id) do
@@ -25,39 +27,14 @@ defmodule ElixirDelhiBot do
   end
 
   def process_update(%{} = update) do
-    case update do
-      %{
-        "message" => %{
-          "chat" => %{"id" => chat_id},
-          "new_chat_members" => new_chat_members
-        }
-      } ->
-        greet_new_members(chat_id, new_chat_members)
+    cond do
+      # add support for new features
+      # like commands etc
+      Greeter.new_chat_members_joined?(update) ->
+        Greeter.handle_new_chat_members(update)
 
-      _ ->
+      true ->
         {:error, :unhandled_update}
     end
-  end
-
-  defp greet_new_members(_chat_id, new_chat_members) when length(new_chat_members) == 0, do: :noop
-
-  defp greet_new_members(chat_id, new_chat_members) do
-    non_bot_members(new_chat_members)
-    |> Enum.each(fn new_chat_member ->
-      greet_new_member(chat_id, new_chat_member)
-    end)
-  end
-
-  def greet_new_member(chat_id, new_chat_member) do
-    ElixirDelhiBot.Telegramex.send_message(
-      chat_id,
-      "A wild #{new_chat_member["first_name"]} appeared!"
-    )
-  end
-
-  defp non_bot_members(new_chat_members) do
-    Enum.filter(new_chat_members, fn new_chat_member ->
-      !new_chat_member["is_bot"]
-    end)
   end
 end
