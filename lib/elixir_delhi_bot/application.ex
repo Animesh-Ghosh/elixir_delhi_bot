@@ -8,10 +8,9 @@ defmodule ElixirDelhiBot.Application do
   @impl true
   def start(_type, _args) do
     children = [
-      # Starts a worker by calling: ElixirDelhiBot.Worker.start_link(arg)
       {Finch, name: Telegramex.HTTPClient},
       {CubDB, data_dir: Application.fetch_env!(:elixir_delhi_bot, :data_dir), name: :my_cubdb},
-      {ElixirDelhiBot.Worker, nil}
+      {ElixirDelhiBot.Poller, nil}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
