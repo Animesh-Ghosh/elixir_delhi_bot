@@ -29,8 +29,7 @@ defmodule ElixirDelhiBot.Poller do
 
   defp poll_updates do
     case ElixirDelhiBot.Telegramex.get_updates() do
-      {:ok, response} ->
-        %{"result" => updates} = response
+      {:ok, %{"result" => updates}} ->
         updates
 
       {:error, reason} ->
