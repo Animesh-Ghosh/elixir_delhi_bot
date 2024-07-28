@@ -1,19 +1,17 @@
 defmodule ElixirDelhiBot.Telegramex do
+  @type updates :: %{required(String.t()) => list(map())}
+  @callback send_message(non_neg_integer(), String.t()) :: term()
+  @callback get_updates() :: {:ok, map()} | {:error, term()}
+
   def send_message(chat_id, text) do
-    client()
-    |> Telegramex.API.call("sendMessage", %{chat_id: chat_id, text: text})
+    impl().send_message(chat_id, text)
   end
 
   def get_updates do
-    client()
-    |> Telegramex.get_updates(allowed_updates: [:message])
+    impl().get_updates()
   end
 
-  defp client do
-    %Telegramex.Client{token: token()}
-  end
-
-  defp token do
-    Application.fetch_env!(:elixir_delhi_bot, :bot_token)
+  defp impl do
+    Application.get_env(:elixir_delhi_bot, :telegramex, ElixirDelhiBot.TelegramexImpl)
   end
 end

@@ -1,6 +1,9 @@
 defmodule ElixirDelhiBot do
   alias ElixirDelhiBot.Greeter
 
+  @doc """
+  Processes a list of Updates.
+  """
   def process_updates([], last_update_id), do: {:ok, last_update_id}
 
   def process_updates(updates, last_update_id) do
@@ -26,6 +29,9 @@ defmodule ElixirDelhiBot do
     end
   end
 
+  @doc """
+  Processes a single Update.
+  """
   def process_update(%{} = update) do
     cond do
       # add support for new features
