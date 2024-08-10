@@ -30,7 +30,7 @@ defmodule ElixirDelhiBot.GreeterTest do
     end
   end
 
-  describe("handle_new_chat_members/1") do
+  describe "handle_new_chat_members/1" do
     test "does not greet new bot members" do
       expect(ElixirDelhiBot.TelegramexMock, :send_message, 0, fn _chat_id, _text -> %{} end)
 

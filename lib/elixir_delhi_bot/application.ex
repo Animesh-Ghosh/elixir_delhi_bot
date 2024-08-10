@@ -10,7 +10,7 @@ defmodule ElixirDelhiBot.Application do
     children = [
       {Finch, name: Telegramex.HTTPClient},
       {CubDB, data_dir: Application.fetch_env!(:elixir_delhi_bot, :data_dir), name: :my_cubdb},
-      {ElixirDelhiBot.Poller, nil}
+      {ElixirDelhiBot.Poller, []}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
