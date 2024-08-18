@@ -1,4 +1,7 @@
 defmodule ElixirDelhiBot.Greeter do
+  @doc """
+  Checks if the Update was a new_chat_members Update.
+  """
   def new_chat_members_joined?(%{} = update) do
     case update do
       %{
@@ -14,6 +17,9 @@ defmodule ElixirDelhiBot.Greeter do
     end
   end
 
+  @doc """
+  Handles the new_chat_members Update.
+  """
   def handle_new_chat_members(%{} = update) do
     %{
       "message" => %{
