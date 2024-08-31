@@ -68,5 +68,24 @@ defmodule ElixirDelhiBotTest do
 
       assert :noop == ElixirDelhiBot.process_update(update)
     end
+
+    test "/start command send an intro help message to the user" do
+      new_update_id = 2
+
+      update = %{
+        "update_id" => new_update_id,
+        "message" => %{
+          "chat" => %{"id" => 1},
+          "entities" => [%{"length" => 6, "offset" => 0, "type" => "bot_command"}],
+          "text" => "/start"
+        }
+      }
+
+      expect(ElixirDelhiBot.TelegramexMock, :send_message, 1, fn _chat_id, _text ->
+        %{}
+      end)
+
+      assert :noop == ElixirDelhiBot.process_update(update)
+    end
   end
 end
