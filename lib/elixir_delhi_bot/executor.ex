@@ -1,5 +1,5 @@
-defmodule ElixirDelhiBot.BotCommandHandler do
-  def command?(update) do
+defmodule ElixirDelhiBot.Executor do
+  def bot_command?(update) do
     case update do
       %{
         "update_id" => _new_update_id,
@@ -8,12 +8,15 @@ defmodule ElixirDelhiBot.BotCommandHandler do
           "entities" => [%{"type" => "bot_command"}],
           "text" => "/start"
         }
-      } -> true
-      _ -> false
+      } ->
+        true
+
+      _ ->
+        false
     end
   end
 
-  def handle_command(updater) do
+  def handle_bot_command(update) do
     %{
       "update_id" => _new_update_id,
       "message" => %{
@@ -21,7 +24,7 @@ defmodule ElixirDelhiBot.BotCommandHandler do
         "entities" => _entities,
         "text" => "/start"
       }
-    } = updater
+    } = update
 
     send_start_msg(chat_id)
   end
@@ -29,8 +32,7 @@ defmodule ElixirDelhiBot.BotCommandHandler do
   defp send_start_msg(chat_id) do
     ElixirDelhiBot.Telegramex.send_message(
       chat_id,
-      "Hello from Elixir BLR!"
+      "Hello from Elixir Delhi Bot!"
     )
-    :noop
   end
 end

@@ -85,7 +85,7 @@ defmodule ElixirDelhiBotTest do
         %{}
       end)
 
-      assert :noop == ElixirDelhiBot.process_update(update)
+      ElixirDelhiBot.process_update(update)
     end
   end
 end

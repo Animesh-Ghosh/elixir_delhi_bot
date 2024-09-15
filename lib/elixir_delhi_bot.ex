@@ -1,6 +1,6 @@
 defmodule ElixirDelhiBot do
+  alias ElixirDelhiBot.Executor
   alias ElixirDelhiBot.Greeter
-  alias ElixirDelhiBot.BotCommandHandler
 
   @doc """
   Processes a list of Updates.
@@ -34,13 +34,11 @@ defmodule ElixirDelhiBot do
   Processes a single Update.
   """
   def process_update(%{} = update) do
-    IO.inspect(update)
-
     cond do
       # add support for new features
       # like commands etc
-      BotCommandHandler.command?(update) ->
-        BotCommandHandler.handle_command(update)
+      Executor.bot_command?(update) ->
+        Executor.handle_bot_command(update)
 
       Greeter.new_chat_members_joined?(update) ->
         Greeter.handle_new_chat_members(update)
