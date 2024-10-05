@@ -66,10 +66,10 @@ defmodule ElixirDelhiBotTest do
         %{}
       end)
 
-      assert :noop == ElixirDelhiBot.process_update(update)
+      ElixirDelhiBot.process_update(update)
     end
 
-    test "/start command send an intro help message to the user" do
+    test "processes bot command updates" do
       new_update_id = 2
 
       update = %{

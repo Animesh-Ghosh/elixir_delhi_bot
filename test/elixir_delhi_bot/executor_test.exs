@@ -33,7 +33,7 @@ defmodule ElixirDelhiBot.ExecutorTest do
   end
 
   describe "handle_bot_command/1" do
-    test "sends the intro message" do
+    test "sends the intro message for the /start command" do
       expected_chat_id = 1
 
       expect(ElixirDelhiBot.TelegramexMock, :send_message, 1, fn chat_id, _text ->
