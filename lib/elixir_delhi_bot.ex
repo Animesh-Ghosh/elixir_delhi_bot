@@ -1,4 +1,5 @@
 defmodule ElixirDelhiBot do
+  alias ElixirDelhiBot.Executor
   alias ElixirDelhiBot.Greeter
 
   @doc """
@@ -36,6 +37,9 @@ defmodule ElixirDelhiBot do
     cond do
       # add support for new features
       # like commands etc
+      Executor.bot_command?(update) ->
+        Executor.handle_bot_command(update)
+
       Greeter.new_chat_members_joined?(update) ->
         Greeter.handle_new_chat_members(update)
 

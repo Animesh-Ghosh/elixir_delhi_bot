@@ -66,7 +66,26 @@ defmodule ElixirDelhiBotTest do
         %{}
       end)
 
-      assert :noop == ElixirDelhiBot.process_update(update)
+      ElixirDelhiBot.process_update(update)
+    end
+
+    test "processes bot command updates" do
+      new_update_id = 2
+
+      update = %{
+        "update_id" => new_update_id,
+        "message" => %{
+          "chat" => %{"id" => 1},
+          "entities" => [%{"length" => 6, "offset" => 0, "type" => "bot_command"}],
+          "text" => "/start"
+        }
+      }
+
+      expect(ElixirDelhiBot.TelegramexMock, :send_message, 1, fn _chat_id, _text ->
+        %{}
+      end)
+
+      ElixirDelhiBot.process_update(update)
     end
   end
 end
