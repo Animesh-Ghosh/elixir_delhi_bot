@@ -1,4 +1,6 @@
 defmodule ElixirDelhiBot.Executor do
+  @bot_commands ~w[/start /help]
+
   def bot_command?(update) do
     case update do
       %{
@@ -6,10 +8,10 @@ defmodule ElixirDelhiBot.Executor do
         "message" => %{
           "chat" => %{"id" => _chat_id},
           "entities" => [%{"type" => "bot_command"}],
-          "text" => "/start"
+          "text" => bot_command
         }
       } ->
-        true
+        bot_command in @bot_commands
 
       _ ->
         false
@@ -22,17 +24,31 @@ defmodule ElixirDelhiBot.Executor do
       "message" => %{
         "chat" => %{"id" => chat_id},
         "entities" => _entities,
-        "text" => "/start"
+        "text" => bot_command
       }
     } = update
 
-    send_start_msg(chat_id)
+    case bot_command do
+      "/start" -> handle_start_command(chat_id)
+      "/help" -> handle_help_command(chat_id)
+    end
   end
 
-  defp send_start_msg(chat_id) do
+  defp handle_start_command(chat_id) do
     ElixirDelhiBot.Telegramex.send_message(
       chat_id,
       "Hello from Elixir Delhi Bot!"
     )
+  end
+
+  defp handle_help_command(chat_id) do
+    help_message = """
+    I am a simple bot that can help you with the following commands:
+
+    /start - send an intro message
+    /help - display this help message
+    """
+
+    ElixirDelhiBot.Telegramex.send_message(chat_id, help_message)
   end
 end
