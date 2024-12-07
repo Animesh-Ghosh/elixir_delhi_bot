@@ -11,9 +11,10 @@ An attempt at creating a Telegram Bot for the [ElixirDelhi Telegram group](https
 elixir, erlang
 
 ## Build steps
+```bash
 mix deps.get && mix deps.compile
 iex -S mix
-
+```
 ## Deployment
 
 Currently, the bot is deployed on [fly.io](https://fly.io). To deploy changes to production, simply run:
