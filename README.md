@@ -11,10 +11,36 @@ An attempt at creating a Telegram Bot for the [ElixirDelhi Telegram group](https
 elixir, erlang
 
 ## Development
+Open Telegram, Message the user "BotFather" to create a bot.
+Once the bot is created, get its token number and export it to the bash variable BOT_TOKEN
+
 ```bash
 mix deps.get && mix deps.compile
 iex -S mix
 ```
+As output you should see a repl.
+To see some activity, create a telegram group with the bot and add users.
+You can see activity in repl by adding logs to process_updates()
+```elixir
+  @doc """ 
+  Processes a list of Updates.
+  """ 
+  def process_updates([], last_update_id), do: {:ok, last_update_id}
+
+  def process_updates(updates, last_update_id) do
+    case first_unprocessed_update(updates, last_update_id) do
+      {:error, :no_unprocessed_update} ->
+        {:ok, last_update_id}
+
+      {:ok, update} ->
+        IO.inspect update 
+        process_update(update)
+        {:ok, update["update_id"]}
+    end 
+  end
+```
+Congratulations! you have succeeded in smoke testing!
+
 ## Deployment
 
 Currently, the bot is deployed on [fly.io](https://fly.io). To deploy changes to production, simply run:
