@@ -7,6 +7,13 @@ An attempt at creating a Telegram Bot for the [ElixirDelhi Telegram group](https
 - [x] Greeting new members
 - [ ] Processing [Telegram's Global Commands](https://core.telegram.org/bots/features#global-commands)
 
+## Prequisites
+elixir, erlang
+
+## Build steps
+mix deps.get && mix deps.compile
+iex -S mix
+
 ## Deployment
 
 Currently, the bot is deployed on [fly.io](https://fly.io). To deploy changes to production, simply run:
