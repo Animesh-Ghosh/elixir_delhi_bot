@@ -10,7 +10,7 @@ An attempt at creating a Telegram Bot for the [ElixirDelhi Telegram group](https
 ## Prequisites
 elixir, erlang
 
-## Build steps
+## Development
 ```bash
 mix deps.get && mix deps.compile
 iex -S mix
