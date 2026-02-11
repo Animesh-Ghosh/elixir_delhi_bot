@@ -52,7 +52,49 @@ defmodule ElixirDelhiBot.GreeterTest do
 
       expect(ElixirDelhiBot.TelegramexMock, :send_message, 1, fn chat_id, text ->
         assert chat_id == expected_chat_id
-        assert text == "A wild John appeared!"
+        assert text in [
+          "A wild John appeared!",
+          "John just joined the server!",
+          "John just joined. Everyone, look busy!",
+          "Welcome John. We hope you brought pizza.",
+          ~s("John" |> welcome() |> to_the_group()),
+          ~s(Pattern matched: %{new_member: "John"}),
+          ~s(spawn(fn -> greet("John") end)),
+          ~s("John" has been added to the process registry!),
+          ~s(GenServer started for "John"!)
+        ]
+        %{}
+      end)
+
+      update = %{
+        "message" => %{
+          "chat" => %{"id" => expected_chat_id},
+          "new_chat_members" => [
+            %{"id" => 1, "is_bot" => false, "first_name" => first_name}
+          ]
+        }
+      }
+
+      ElixirDelhiBot.Greeter.handle_new_chat_members(update)
+    end
+
+    test "greets new members with Unicode names" do
+      expected_chat_id = 1
+      first_name = "José"
+
+      expect(ElixirDelhiBot.TelegramexMock, :send_message, 1, fn chat_id, text ->
+        assert chat_id == expected_chat_id
+        assert text in [
+          "A wild José appeared!",
+          "José just joined the server!",
+          "José just joined. Everyone, look busy!",
+          "Welcome José. We hope you brought pizza.",
+          ~s("José" |> welcome() |> to_the_group()),
+          ~s(Pattern matched: %{new_member: "José"}),
+          ~s(spawn(fn -> greet("José") end)),
+          ~s("José" has been added to the process registry!),
+          ~s(GenServer started for "José"!)
+        ]
         %{}
       end)
 
