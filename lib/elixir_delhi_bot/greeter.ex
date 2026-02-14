@@ -1,12 +1,11 @@
 defmodule ElixirDelhiBot.Greeter do
   @greeting_templates [
     ~s(A wild ~ts appeared!),
-    ~s(~ts just joined the server!),
     ~s(~ts just joined. Everyone, look busy!),
     ~s(Welcome ~ts. We hope you brought pizza.),
-    ~s("~ts" |> welcome() |> to_the_group()),
+    ~s["~ts" |> welcome() |> to_the_group()],
     ~s(Pattern matched: %{new_member: "~ts"}),
-    ~s(spawn(fn -> greet("~ts") end)),
+    ~s[spawn(fn -> greet("~ts") end)],
     ~s("~ts" has been added to the process registry!),
     ~s(GenServer started for "~ts"!)
   ]
