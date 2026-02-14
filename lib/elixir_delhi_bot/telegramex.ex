@@ -1,5 +1,4 @@
 defmodule ElixirDelhiBot.Telegramex do
-  @type updates :: %{required(String.t()) => list(map())}
   @callback send_message(non_neg_integer(), String.t()) :: term()
   @callback get_updates() :: {:ok, map()} | {:error, term()}
 
