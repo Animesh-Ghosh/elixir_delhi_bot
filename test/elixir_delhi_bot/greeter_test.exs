@@ -47,6 +47,8 @@ defmodule ElixirDelhiBot.GreeterTest do
     end
 
     test "greets new human members" do
+      # NOTE: we can be rigorous in verifying each greeting template
+      # but the setup required for mox felt over-kill to test a simple feature like this.
       expected_chat_id = 1
       first_name = "José 🦭"
 
