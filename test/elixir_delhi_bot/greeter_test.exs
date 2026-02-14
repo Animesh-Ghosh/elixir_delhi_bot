@@ -47,12 +47,25 @@ defmodule ElixirDelhiBot.GreeterTest do
     end
 
     test "greets new human members" do
+      # NOTE: we can be rigorous in verifying each greeting template
+      # but the setup required for mox felt over-kill to test a simple feature like this.
       expected_chat_id = 1
-      first_name = "John"
+      first_name = "José 🦭"
 
       expect(ElixirDelhiBot.TelegramexMock, :send_message, 1, fn chat_id, text ->
         assert chat_id == expected_chat_id
-        assert text == "A wild John appeared!"
+
+        assert text in [
+                 ~s[A wild José 🦭 appeared!],
+                 ~s[José 🦭 just joined. Everyone, look busy!],
+                 ~s[Welcome José 🦭. We hope you brought pizza.],
+                 ~s["José 🦭" |> welcome() |> to_the_group()],
+                 ~s[Pattern matched: %{new_member: "José 🦭"}],
+                 ~s[spawn(fn -> greet("José 🦭") end)],
+                 ~s["José 🦭" has been added to the process registry!],
+                 ~s[GenServer started for "José 🦭"!]
+               ]
+
         %{}
       end)
 
