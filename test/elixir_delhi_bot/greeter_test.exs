@@ -54,14 +54,14 @@ defmodule ElixirDelhiBot.GreeterTest do
         assert chat_id == expected_chat_id
 
         assert text in [
-                 "A wild John appeared!",
-                 "John just joined. Everyone, look busy!",
-                 "Welcome John. We hope you brought pizza.",
+                 ~s[A wild John appeared!],
+                 ~s[John just joined. Everyone, look busy!],
+                 ~s[Welcome John. We hope you brought pizza.],
                  ~s["John" |> welcome() |> to_the_group()],
-                 ~s(Pattern matched: %{new_member: "John"}),
+                 ~s[Pattern matched: %{new_member: "John"}],
                  ~s[spawn(fn -> greet("John") end)],
-                 ~s("John" has been added to the process registry!),
-                 ~s(GenServer started for "John"!)
+                 ~s["John" has been added to the process registry!],
+                 ~s[GenServer started for "John"!]
                ]
 
         %{}
@@ -87,14 +87,14 @@ defmodule ElixirDelhiBot.GreeterTest do
         assert chat_id == expected_chat_id
 
         assert text in [
-                 "A wild José 🦭 appeared!",
-                 "José 🦭 just joined. Everyone, look busy!",
-                 "Welcome José 🦭. We hope you brought pizza.",
+                 ~s[A wild José 🦭 appeared!],
+                 ~s[José 🦭 just joined. Everyone, look busy!],
+                 ~s[Welcome José 🦭. We hope you brought pizza.],
                  ~s["José 🦭" |> welcome() |> to_the_group()],
-                 ~s(Pattern matched: %{new_member: "José 🦭"}),
+                 ~s[Pattern matched: %{new_member: "José 🦭"}],
                  ~s[spawn(fn -> greet("José 🦭") end)],
-                 ~s("José 🦭" has been added to the process registry!),
-                 ~s(GenServer started for "José 🦭"!)
+                 ~s["José 🦭" has been added to the process registry!],
+                 ~s[GenServer started for "José 🦭"!]
                ]
 
         %{}
