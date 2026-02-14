@@ -7,7 +7,7 @@ defmodule ElixirDelhiBot.Greeter do
     ~s[Pattern matched: %{new_member: "~ts"}],
     ~s[spawn(fn -> greet("~ts") end)],
     ~s["~ts" has been added to the process registry!],
-    ~s[GenServer started for "~ts"]
+    ~s[GenServer started for "~ts"!]
   ]
 
   @doc """
